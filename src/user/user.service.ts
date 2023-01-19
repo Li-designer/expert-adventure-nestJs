@@ -71,13 +71,14 @@ export class UserService {
   async userfindOne(id: number) {
     const res = await this.usersRepository.find({
       where: { id },
-      relations: ['role'],
+      // relations: ['role'],
     });
     const value = { ...res[0] };
     // 浅拷贝一份
     // const value2 = Object.assign(value, { ...value.role });
     // delete value2.role;
     return {
+      code: 200,
       // data: { ...value2, role: value2.typeId },
       data: { ...value },
     };

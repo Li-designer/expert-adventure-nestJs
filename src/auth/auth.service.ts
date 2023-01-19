@@ -19,6 +19,8 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     console.log(username, 'username');
     const user = await this.UserService.findUserName(username);
+    console.log(user, 'user');
+
     if (user[0] && user[0].password === password) {
       return user;
     }
@@ -35,7 +37,7 @@ export class AuthService {
     // token过期时间
     const time = new Date();
     const end = time.setTime(time.getTime() + 3600 * 1000 * 24 * 7);
-    const expires = dayjs(end).format('YYYY/MM/DD');
+    const expires = dayjs(end).format('YYYY/MM/DD HH:mm:ss');
     // 3600 * 24 * 7
     return {
       id: res[0].id,
