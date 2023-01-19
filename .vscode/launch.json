@@ -1,0 +1,26 @@
+{
+  // 使用 IntelliSense 了解相关属性。 
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "name": "nestIS调试",
+    "request": "launch",
+    "runtimeArgs": [
+      "start:hotdev",
+      "run-script",
+      "start"
+    ],
+    "console": "integratedTerminal",
+    "runt imeExecutable": "npm",
+    "skipFiles": [
+        "<node_internals>/**"
+    ],
+    "type": "node",
+    "configurations": [
+    {
+      "command": "npm run start:hotdev",
+      "name": "Run npm run start:hotdev",
+      "request": "launch",
+      "type": "node-terminal"
+    }
+    ]
+  }
