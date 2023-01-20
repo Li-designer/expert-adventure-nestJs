@@ -10,7 +10,9 @@ import {
 import { MenuService } from './menu.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('菜单增删改查')
 @Controller('menu')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
@@ -20,7 +22,7 @@ export class MenuController {
     return this.menuService.create(createMenuDto);
   }
 
-  @Get()
+  @Get('getMenuList')
   findAll() {
     return this.menuService.findAll();
   }

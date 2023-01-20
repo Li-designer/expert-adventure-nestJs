@@ -23,6 +23,6 @@ export class Menu extends BaseEntity {
   @Column({ type: 'varchar', name: 'icon' })
   icon: string;
 
-  @Column({ type: 'varchar', name: 'rank' })
+  @Column({ type: 'int', name: 'rank' })
   rank: number;
 }

@@ -24,7 +24,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   icon: number;
 
-  @ApiProperty({ example: 'icon' })
+  @ApiProperty({ example: 'parentKey' })
   parentKey?: string;
 }
 
