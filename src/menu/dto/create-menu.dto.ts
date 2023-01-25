@@ -9,6 +9,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   path: string;
 
+  @ApiProperty({ example: 'permission/page/index' })
+  @IsNotEmpty()
+  component: string;
+
   @ApiProperty({ example: '123456' })
   @IsNotEmpty()
   title: string;

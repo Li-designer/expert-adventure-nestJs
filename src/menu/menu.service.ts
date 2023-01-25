@@ -30,6 +30,7 @@ export class MenuService {
             parentKey: item.parentKey,
             key: item.key,
             path: item.path,
+            component: item.component,
             meta: {
               icon: item.icon,
               rank: item.rank,

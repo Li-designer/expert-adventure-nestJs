@@ -8,6 +8,9 @@ export class Menu extends BaseEntity {
   @Column({ type: 'varchar', name: 'path' })
   path: string;
 
+  @Column({ type: 'varchar', name: 'component' })
+  component: string;
+
   @Column({ type: 'varchar', name: 'title' })
   title: string;
 
