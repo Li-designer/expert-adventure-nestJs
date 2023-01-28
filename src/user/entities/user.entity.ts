@@ -1,5 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+} from 'typeorm';
+import { Role } from '@/role/entities/role.entity';
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -11,6 +17,10 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', name: 'password' })
   password: string;
 
-  // @ManyToOne((type) => Role, (role) => role.users)
-  // role: Role;
+  /**
+   * @用户和角色
+   * @多对多
+   */
+  @ManyToMany(() => Role, (role) => role.roleId)
+  roleIds: Role[];
 }

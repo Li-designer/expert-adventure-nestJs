@@ -42,6 +42,7 @@ export class AuthService {
     return {
       id: res[0].id,
       username: user.username,
+      roles: ['admin'], // todo 角色暂时写死
       // menuId: res.data.menuId,
       // name: res.data.name,
       accessToken: this.jwtService.sign(payload),

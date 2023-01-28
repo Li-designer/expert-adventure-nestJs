@@ -13,18 +13,18 @@ export class UserService {
     private readonly usersRepository: Repository<User>,
   ) {}
   async create(CreateUserDto: CreateUserDto) {
-    try {
-      await this.usersRepository.save(CreateUserDto);
-      return {
-        code: 200,
-        message: 'Success',
-      };
-    } catch (e) {
-      return {
-        code: 400,
-        message: e,
-      };
-    }
+    // try {
+    return await this.usersRepository.save(CreateUserDto);
+    //   return {
+    //     code: 200,
+    //     message: 'Success',
+    //   };
+    // } catch (e) {
+    //   return {
+    //     code: 400,
+    //     message: e,
+    //   };
+    // }
   }
   // 查找所有用户
   async findAll(query: Page): Promise<Response> {

@@ -1,5 +1,12 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
+import {
+  Entity,
+  BaseEntity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinTable,
+} from 'typeorm';
+import { Role } from '@/role/entities/role.entity';
 @Entity({ name: 'menu' })
 export class Menu extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -28,4 +35,12 @@ export class Menu extends BaseEntity {
 
   @Column({ type: 'int', name: 'rank' })
   rank: number;
+
+  /**
+   * @菜单和角色
+   * @多对多
+   */
+  @ManyToMany(() => Role, (role) => role.roleType)
+  @JoinTable()
+  roles: Role[];
 }

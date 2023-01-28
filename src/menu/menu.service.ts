@@ -4,6 +4,7 @@ import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from './entities/menu.entity';
+import { Role } from '@/type/menu';
 
 @Injectable()
 export class MenuService {
@@ -16,7 +17,7 @@ export class MenuService {
   }
 
   async findAll() {
-    const res = await this.menuRepository.find();
+    const res = await this.menuRepository.find({ relations: ['roles'] });
     const _list = res.reduce((curr, item) => {
       //  如果有key相同放到一个children数组里面
       if (
@@ -35,8 +36,10 @@ export class MenuService {
               icon: item.icon,
               rank: item.rank,
               title: item.title,
+              roles: this.getRolesList(item.roles),
             },
-            children: [],
+            // ! 这里children为空会导致菜单不显示
+            // children: [],
           });
         }
       }
@@ -54,6 +57,7 @@ export class MenuService {
             icon: item.icon,
             rank: item.rank,
             title: item.title,
+            roles: this.getRolesList(item.roles),
           },
           children: [],
         });
@@ -70,6 +74,7 @@ export class MenuService {
             icon: item.icon,
             rank: item.rank,
             title: item.title,
+            roles: this.getRolesList(item.roles),
           },
           children: [],
         });
@@ -77,6 +82,13 @@ export class MenuService {
       return curr;
     }, []);
     return _list;
+  }
+
+  getRolesList(roles: Role) {
+    const res = roles.map((item) => {
+      return item.roleType;
+    });
+    return res;
   }
 
   findOne(id: number) {

@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MenuModule } from './menu/menu.module';
+import { RoleModule } from './role/role.module';
 @Module({
   imports: [
     // 数据库连接
@@ -21,6 +22,7 @@ import { MenuModule } from './menu/menu.module';
     UserModule,
     AuthModule,
     MenuModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
