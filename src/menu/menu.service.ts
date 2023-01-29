@@ -16,6 +16,11 @@ export class MenuService {
     return await this.menuRepository.save(createMenuDto);
   }
 
+  /**
+   * @不返回component 前端根据path跳转,path对应文件名
+   * @返回component 前端根据component跳转,path可以随便写
+   */
+
   async findAll() {
     const res = await this.menuRepository.find({ relations: ['roles'] });
     const _list = res.reduce((curr, item) => {
@@ -30,6 +35,7 @@ export class MenuService {
           curr[index].children.push({
             parentKey: item.parentKey,
             key: item.key,
+            name: item.name,
             path: item.path,
             component: item.component,
             meta: {
@@ -52,7 +58,9 @@ export class MenuService {
         curr.push({
           parentKey: item.parentKey,
           key: item.key,
+          name: item.name,
           path: item.path,
+          component: item.component, // * 父component为undefind可以显示子页面
           meta: {
             icon: item.icon,
             rank: item.rank,
@@ -70,6 +78,8 @@ export class MenuService {
           parentKey: item.parentKey,
           key: item.key,
           path: item.path,
+          name: item.name,
+          component: item.component, // * 父component为undefind可以显示子页面
           meta: {
             icon: item.icon,
             rank: item.rank,
@@ -85,9 +95,10 @@ export class MenuService {
   }
 
   getRolesList(roles: Role) {
-    const res = roles.map((item) => {
-      return item.roleType;
-    });
+    const res =
+      roles.map((item) => {
+        return item.roleType;
+      }) || [];
     return res;
   }
 

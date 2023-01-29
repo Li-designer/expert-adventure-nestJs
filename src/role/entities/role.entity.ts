@@ -27,7 +27,6 @@ export class Role extends BaseEntity {
    * @多对多
    */
   @ManyToMany(() => User, (user) => user.id)
-  @JoinTable()
   userIds: User[];
 
   /**

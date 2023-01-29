@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
   PrimaryGeneratedColumn,
   ManyToMany,
 } from 'typeorm';
@@ -22,5 +23,6 @@ export class User extends BaseEntity {
    * @多对多
    */
   @ManyToMany(() => Role, (role) => role.roleId)
-  roleIds: Role[];
+  @JoinTable()
+  roles: Role[];
 }

@@ -1,3 +1,4 @@
+import { MenuService } from '@/menu/menu.service';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -5,12 +6,14 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Page, Response } from '@/type/user';
+import { Role } from '@/type/menu';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly MenuService: MenuService,
   ) {}
   async create(CreateUserDto: CreateUserDto) {
     // try {
@@ -61,27 +64,50 @@ export class UserService {
   }
 
   /**
-   *
+   * @jwt认证登录
    * @param username
+   * @returns
    */
   async findUserName(username: string) {
-    return this.usersRepository.find({ where: { username } });
+    const res = await this.usersRepository.find({
+      relations: ['roles'],
+      where: { username },
+    });
+    const value = { ...res[0] };
+    const resRole = await this.getRolesName(res[0]?.roles);
+    delete value.roles;
+    return {
+      ...value,
+      roles: resRole.role,
+      roleNames: resRole.roleNames,
+    };
   }
 
   async userfindOne(id: number) {
     const res = await this.usersRepository.find({
       where: { id },
-      // relations: ['role'],
+      // relations: ['roles'],
     });
-    const value = { ...res[0] };
+
     // 浅拷贝一份
     // const value2 = Object.assign(value, { ...value.role });
-    // delete value2.role;
+    // delete value.roles;
     return {
       code: 200,
-      // data: { ...value2, role: value2.typeId },
-      data: { ...value },
+      data: { ...res[0] },
     };
+  }
+
+  getRolesName(roles: Role) {
+    const roleNames =
+      roles.map((item) => {
+        return item.rolename;
+      }) || [];
+    const role =
+      roles.map((item) => {
+        return item.roleType;
+      }) || [];
+    return { role, roleNames };
   }
 
   async updateUser(id: number, updateUserDto: UpdateUserDto) {
