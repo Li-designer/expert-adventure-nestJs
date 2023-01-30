@@ -33,6 +33,7 @@ export class MenuService {
         const index = curr.findIndex((it) => it.key == item.parentKey);
         if (index !== -1) {
           curr[index].children.push({
+            id: item.id,
             parentKey: item.parentKey,
             key: item.key,
             name: item.name,
@@ -56,11 +57,12 @@ export class MenuService {
         curr.findIndex((ite) => ite.key == item.parentKey) === -1
       ) {
         curr.push({
+          id: item.id,
           parentKey: item.parentKey,
           key: item.key,
           name: item.name,
           path: item.path,
-          component: item.component, // * 父component为undefind可以显示子页面
+          component: item.component || undefined, // * 父component为undefind/Layout可以显示子页面
           meta: {
             icon: item.icon,
             rank: item.rank,
@@ -75,11 +77,12 @@ export class MenuService {
       if (!curr.length) {
         // debugger
         curr.push({
+          id: item.id,
           parentKey: item.parentKey,
           key: item.key,
           path: item.path,
           name: item.name,
-          component: item.component, // * 父component为undefind可以显示子页面
+          component: item.component || undefined, // * 父component为undefind/Layout可以显示子页面
           meta: {
             icon: item.icon,
             rank: item.rank,
@@ -106,8 +109,8 @@ export class MenuService {
     return `This action returns a #${id} menu`;
   }
 
-  update(id: number, updateMenuDto: UpdateMenuDto) {
-    return `This action updates a #${id} menu`;
+  async update(id: number, updateMenuDto: UpdateMenuDto) {
+    return await this.menuRepository.update(id, { ...updateMenuDto });
   }
 
   remove(id: number) {

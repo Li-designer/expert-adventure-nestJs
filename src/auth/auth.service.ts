@@ -44,8 +44,6 @@ export class AuthService {
       username: user.username,
       roles: res.roles,
       roleNames: res.roleNames,
-      // menuId: res.data.menuId,
-      // name: res.data.name,
       accessToken: this.jwtService.sign(payload),
       expires: expires,
     };
