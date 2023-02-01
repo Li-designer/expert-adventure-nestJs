@@ -33,6 +33,6 @@ export class Role extends BaseEntity {
    * @菜单和角色
    * @多对多
    */
-  @ManyToMany(() => Menu, (menu) => menu.key)
+  @ManyToMany(() => Menu, (menu) => menu.roles)
   menuKeys: Menu[];
 }

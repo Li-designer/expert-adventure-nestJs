@@ -40,7 +40,19 @@ export class Menu extends BaseEntity {
    * @菜单和角色
    * @多对多
    */
-  @ManyToMany(() => Role, (role) => role.roleType)
-  @JoinTable()
+  @ManyToMany(() => Role, (role) => role.menuKeys, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'menu_role', // 此关系的联结表的表名
+    joinColumn: {
+      name: 'menu',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role',
+      referencedColumnName: 'roleId',
+    },
+  })
   roles: Role[];
 }

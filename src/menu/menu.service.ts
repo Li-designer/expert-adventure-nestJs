@@ -105,8 +105,8 @@ export class MenuService {
     return res;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menu`;
+  async findOne(id: number) {
+    return await this.menuRepository.find({ where: { id } });
   }
 
   async update(id: number, updateMenuDto: UpdateMenuDto) {
