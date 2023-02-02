@@ -26,6 +26,8 @@ export class Menu extends BaseEntity {
 
   @Column({ type: 'varchar', name: 'key' })
   key: string;
+  @Column({ type: 'int', name: 'showParent', default: 1 })
+  showParent: number;
 
   @Column({ type: 'varchar', name: 'parent_key' })
   parentKey: string;

@@ -43,6 +43,7 @@ export class MenuService {
               icon: item.icon,
               rank: item.rank,
               title: item.title,
+              showParent: item.showParent === 1 ? true : false,
               roles: this.getRolesList(item.roles),
             },
             // ! 这里children为空会导致菜单不显示
@@ -106,11 +107,26 @@ export class MenuService {
   }
 
   async findOne(id: number) {
-    return await this.menuRepository.find({ where: { id } });
+    const res = await this.menuRepository.find({ where: { id } });
+    return {
+      ...res[0],
+    };
   }
 
   async update(id: number, updateMenuDto: UpdateMenuDto) {
     return await this.menuRepository.update(id, { ...updateMenuDto });
+  }
+
+  async findChildren(key: string) {
+    const res = await this.findAll();
+    let children = [];
+    res.forEach((item) => {
+      if (item.key === key) {
+        children = item.children;
+      }
+    });
+
+    return children;
   }
 
   remove(id: number) {

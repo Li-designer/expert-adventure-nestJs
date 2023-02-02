@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Page, Response } from '@/type/user';
+import { Page } from '@/type/user';
 
 @ApiTags('用户增删改查')
 @Controller('user')
@@ -15,7 +15,7 @@ export class UserController {
   }
 
   @Get('all')
-  findAll(@Query() query: Page): Promise<Response> {
+  findAll(@Query() query: Page) {
     return this.userService.findAll(query);
   }
 
@@ -29,13 +29,35 @@ export class UserController {
     return this.userService.userfindOne(+id);
   }
 
+  /**
+   * @修改用户角色
+   * @param id
+   * @param roles
+   * @returns
+   */
+  @Post('updateRoles')
+  updateUserRoles(@Body('id') id: number, @Body('roles') roles: Array<number>) {
+    return this.userService.updateUserRoles(+id, roles);
+  }
+
+  /**
+   * @修改用户信息
+   * @param updateUserDto
+   * @returns
+   */
   @Post('updateId')
   update(@Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(+updateUserDto.id, updateUserDto);
   }
 
+  /**
+   * @删除用户
+   * @param id 
+   * @param roles 
+   * @returns 
+   */
   @Post('deleteId')
-  remove(@Body() updateUserDto: UpdateUserDto) {
-    return this.userService.remove(+updateUserDto.id);
+  remove(@Body('id') id: number, @Body('roles') roles: Array<number>) {
+    return this.userService.remove(id, roles);
   }
 }

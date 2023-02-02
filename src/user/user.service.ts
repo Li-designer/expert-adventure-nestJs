@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Page, Response } from '@/type/user';
+import { Page } from '@/type/user';
 import { Role } from '@/type/menu';
 
 @Injectable()
@@ -16,51 +16,29 @@ export class UserService {
     private readonly MenuService: MenuService,
   ) {}
   async create(CreateUserDto: CreateUserDto) {
-    // try {
     return await this.usersRepository.save(CreateUserDto);
-    //   return {
-    //     code: 200,
-    //     message: 'Success',
-    //   };
-    // } catch (e) {
-    //   return {
-    //     code: 400,
-    //     message: e,
-    //   };
-    // }
   }
   // 查找所有用户
-  async findAll(query: Page): Promise<Response> {
+  async findAll(query: Page) {
     /**
-     * 一对多关联查询
+     * 多对多关联查询
      */
-    try {
-      const total = await this.usersRepository.find();
-      const res = await this.usersRepository.find({
-        relations: ['role'],
-        order: {
-          id: 'ASC',
-        },
-        skip: query.pageSize * (query.pageNum - 1),
-        take: +query.pageSize,
-        cache: true,
-      });
-      return {
-        code: 200,
-        data: {
-          list: res,
-          pageNum: +query.pageNum,
-          pageSize: +query.pageSize,
-          total: total.length,
-        },
-        message: 'Success',
-      };
-    } catch (e) {
-      return {
-        code: 400,
-        message: e,
-      };
-    }
+    const total = await this.usersRepository.find();
+    const res = await this.usersRepository.find({
+      relations: ['roles'],
+      order: {
+        id: 'ASC',
+      },
+      skip: query.pageSize * (query.pageNum - 1),
+      take: +query.pageSize,
+      cache: true,
+    });
+    return {
+      list: res,
+      pageNum: +query.pageNum,
+      pageSize: +query.pageSize,
+      total: total.length,
+    };
   }
 
   /**
@@ -110,12 +88,75 @@ export class UserService {
     return { role, roleNames };
   }
 
+  /**
+   * @多对多关联角色更新
+   * @param id
+   * @param roles
+   */
+  async updateUserRoles(id: number, roles: Array<number>) {
+    const res = await this.getUserOne(id);
+    const keyArr = res.roles.map((item) => {
+      return +item.roleId;
+    });
+    if (roles && roles.length > 0 && keyArr.length < roles.length) {
+      // 防止重复添加
+      roles?.forEach(async (item) => {
+        // *没有添加
+        if (keyArr.indexOf(+item) == -1) {
+          await this.usersRepository
+            .createQueryBuilder()
+            .relation(User, 'roles')
+            .of(id)
+            .add(+item);
+        }
+      });
+    } else if (roles && roles.length > 0 && keyArr.length > roles.length) {
+      // *删除多余的
+      keyArr?.forEach(async (item) => {
+        if (roles.indexOf(+item) == -1) {
+          await this.usersRepository
+            .createQueryBuilder()
+            .relation(User, 'roles')
+            .of(id)
+            .remove(+item);
+        }
+      });
+    }
+    return;
+  }
+
+  /**
+   * @多对多单个用户关联角色查询
+   * @param id
+   * @returns
+   */
+  async getUserOne(id: number) {
+    const UserRole = await this.usersRepository
+      .createQueryBuilder('User')
+      .leftJoinAndSelect('User.roles', 'Role')
+      .where('User.id = :id', { id })
+      .getOne();
+    return UserRole;
+  }
+
   async updateUser(id: number, updateUserDto: UpdateUserDto) {
     return await this.usersRepository.update(id, { ...updateUserDto });
   }
-
-  async remove(id: number) {
+  /**
+   * @删除用户删除关联角色
+   * @param id
+   * @param roles
+   * @returns
+   */
+  async remove(id: number, roles: Array<number>) {
     await this.usersRepository.delete(id);
-    return id;
+    roles?.forEach(async (item) => {
+      await this.usersRepository
+        .createQueryBuilder()
+        .relation(User, 'roles')
+        .of(id)
+        .remove(+item);
+    });
+    return '用户删除成功!';
   }
 }

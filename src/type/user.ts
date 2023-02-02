@@ -6,11 +6,11 @@ export type Page = {
   messageDesc?: string;
 };
 
-export interface Response<T = unknown> {
-  code: number;
-  data?: T;
-  message: any;
-}
+// export interface Response<T = unknown> {
+//   code: number;
+//   data?: T;
+//   message: any;
+// }
 export type BodyParam = {
   typeId?: number | string;
 };

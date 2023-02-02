@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
@@ -27,9 +28,14 @@ export class MenuController {
     return this.menuService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get('menuDetail')
+  findOne(@Query('id') id: number) {
     return this.menuService.findOne(+id);
+  }
+
+  @Get('getMenuChildren')
+  findChildren(@Query('key') key: string) {
+    return this.menuService.findChildren(key);
   }
 
   @Post('updateMenu')

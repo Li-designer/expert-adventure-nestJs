@@ -22,7 +22,19 @@ export class User extends BaseEntity {
    * @用户和角色
    * @多对多
    */
-  @ManyToMany(() => Role, (role) => role.roleId)
-  @JoinTable()
+  @ManyToMany(() => Role, (role) => role.roleId, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'user_role', // 此关系的联结表的表名
+    joinColumn: {
+      name: 'user',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role',
+      referencedColumnName: 'roleId',
+    },
+  })
   roles: Role[];
 }

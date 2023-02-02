@@ -24,6 +24,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   rank: number;
 
+  @ApiProperty({ example: 1 })
+  @IsNotEmpty()
+  showParent?: number;
+
   @ApiProperty({ example: 'icon' })
   @IsNotEmpty()
   icon: number;
