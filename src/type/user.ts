@@ -1,9 +1,7 @@
 export type Page = {
-  pageNum: number;
-  pageSize: number;
+  pageNum: number | string;
+  pageSize: number | string;
   username?: string;
-  messageName?: string;
-  messageDesc?: string;
 };
 
 // export interface Response<T = unknown> {

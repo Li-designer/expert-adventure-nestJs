@@ -52,9 +52,9 @@ export class UserController {
 
   /**
    * @删除用户
-   * @param id 
-   * @param roles 
-   * @returns 
+   * @param id
+   * @param roles
+   * @returns
    */
   @Post('deleteId')
   remove(@Body('id') id: number, @Body('roles') roles: Array<number>) {

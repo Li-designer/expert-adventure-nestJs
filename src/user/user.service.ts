@@ -1,5 +1,5 @@
 import { MenuService } from '@/menu/menu.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Query } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -19,7 +19,7 @@ export class UserService {
     return await this.usersRepository.save(CreateUserDto);
   }
   // 查找所有用户
-  async findAll(query: Page) {
+  async findAll(@Query() query: Page) {
     /**
      * 多对多关联查询
      */
@@ -29,7 +29,7 @@ export class UserService {
       order: {
         id: 'ASC',
       },
-      skip: query.pageSize * (query.pageNum - 1),
+      skip: +query.pageSize * (+query.pageNum - 1),
       take: +query.pageSize,
       cache: true,
     });
@@ -121,8 +121,33 @@ export class UserService {
             .remove(+item);
         }
       });
+    } else if (roles && roles.length > 0 && keyArr.length === roles.length) {
+      const filt_key = keyArr.filter((item) => {
+        return roles.indexOf(item) === -1;
+      });
+      const filt_role = roles.filter((item) => {
+        return keyArr.indexOf(item) === -1;
+      });
+      if (filt_key.length > 0) {
+        filt_key.forEach(async (el) => {
+          await this.usersRepository
+            .createQueryBuilder()
+            .relation(User, 'roles')
+            .of(id)
+            .remove(+el);
+        });
+      }
+      if (filt_role.length > 0) {
+        filt_role.forEach(async (el) => {
+          await this.usersRepository
+            .createQueryBuilder()
+            .relation(User, 'roles')
+            .of(id)
+            .add(+el);
+        });
+      }
     }
-    return;
+    return '角色修改成功!';
   }
 
   /**
