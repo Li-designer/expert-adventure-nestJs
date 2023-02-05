@@ -24,11 +24,21 @@ export class UserController {
    * 参数查询
    * @Query id
    */
-  findOne(@Query('id') id: string) {
+  async findOne(@Query('id') id: string) {
     // +id转换成number
     return this.userService.userfindOne(+id);
   }
 
+  @Get('userRoles')
+  async getUserOne(@Query('id') id: string) {
+    // +id转换成number
+    const res = await this.userService.getUserOne(+id);
+    return {
+      id: res.id,
+      username: res.username,
+      roles: res.roles,
+    };
+  }
   /**
    * @修改用户角色
    * @param id

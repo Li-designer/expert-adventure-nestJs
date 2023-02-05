@@ -54,6 +54,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
   // 白名单数组
   private urlList: string[] = [
+    '/',
     '/expert-adventure/auth/login',
     '/expert-adventure/',
   ];

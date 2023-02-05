@@ -46,17 +46,17 @@ export class UserService {
    * @param username
    * @returns
    */
-  async findUserName(username: string) {
+  async findUserName(username: string, role?: string) {
     const res = await this.usersRepository.find({
       relations: ['roles'],
       where: { username },
     });
     const value = { ...res[0] };
-    const resRole = await this.getRolesName(res[0]?.roles);
+    const resRole = await this.getRolesName(res[0]?.roles, role);
     delete value.roles;
     return {
       ...value,
-      roles: resRole.role,
+      roles: resRole.Role,
       roleNames: resRole.roleNames,
     };
   }
@@ -76,16 +76,35 @@ export class UserService {
     };
   }
 
-  getRolesName(roles: Role) {
-    const roleNames =
-      roles.map((item) => {
-        return item.rolename;
-      }) || [];
-    const role =
-      roles.map((item) => {
-        return item.roleType;
-      }) || [];
-    return { role, roleNames };
+  /**
+   * @角色切换传role切换角色不传返回所有角色
+   * @param roles
+   * @param role
+   * @returns { Role, roleNames }
+   */
+
+  getRolesName(roles: Role, role?: string) {
+    if (!role) {
+      const roleNames =
+        roles.map((item) => {
+          return item.rolename;
+        }) || [];
+      const Role =
+        roles.map((item) => {
+          return item.roleType;
+        }) || [];
+      return { Role, roleNames };
+    } else {
+      const Role = [role];
+      const name = roles.filter((item) => {
+        return role === item.roleType;
+      });
+      let roleNames = [];
+      if (name.length > 0) {
+        roleNames = [name[0].rolename];
+      }
+      return { Role, roleNames };
+    }
   }
 
   /**
@@ -146,6 +165,15 @@ export class UserService {
             .add(+el);
         });
       }
+    } else {
+      // *传的值为空,全部删除
+      keyArr?.forEach(async (item) => {
+        await this.usersRepository
+          .createQueryBuilder()
+          .relation(User, 'roles')
+          .of(id)
+          .remove(+item);
+      });
     }
     return '角色修改成功!';
   }

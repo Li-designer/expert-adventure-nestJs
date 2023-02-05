@@ -32,7 +32,7 @@ export class AuthService {
    * @param user
    */
   async login(user: User) {
-    const res = await this.UserService.findUserName(user.username);
+    const res = await this.UserService.findUserName(user.username, user.role);
     const payload = { username: user.username, sub: res.id };
     // token过期时间
     const time = new Date();

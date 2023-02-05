@@ -29,7 +29,6 @@ export class RoleController {
   findAll() {
     return this.roleService.findAll();
   }
-
   /**
    * @ManyToMany 关联查询角色查询关联菜单
    * @param roleId
