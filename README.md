@@ -1,9 +1,9 @@
 # nestJS环境搭建基础模板
 
-## 静态资源部署配置
+## 运行
 
 ```shell
-    http://localhost:3000/ant-pro/
+    http://localhost:3000/
 ```
 
 ## 接口文档`swagger`
@@ -30,7 +30,7 @@
       port: 3306,
       username: 'root',
       password: '12345678',
-      database: 'antpro',
+      database: 'XXX',
       autoLoadEntities: true,
       synchronize: true, //实体与数据表进行对应,不创建数据库也会自动生成
     })
@@ -48,13 +48,9 @@
  npm run start:prod
 ```
 
-## 打包静态资源路径
-
-     `dist/ant-pro`
-
 ## 本地静态资源路径
 
-    `ant-nest/ant-pro`
+    `/expert-adventure`
 
 ## 生成一个CRUD
 
@@ -62,3 +58,10 @@
   # 执行命令选择`REST API`
 $ nest g resource menu
 ```
+## 本地`websocket`
+
+`ws://localhost:3002`
+
+## `websocket`版本
+`@nestjs/platform-socket.io": "^8.0.2`
+`@nestjs/websockets": "^8.0.2`
