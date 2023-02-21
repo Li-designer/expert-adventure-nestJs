@@ -19,9 +19,6 @@ export class Role extends BaseEntity {
   @Column({ type: 'varchar', name: 'role_type' })
   roleType: string;
 
-  // @Column({ type: 'varchar', name: 'menu_key' })
-  // menukey: string;
-
   /**
    * @用户和角色
    * @多对多

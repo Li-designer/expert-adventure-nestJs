@@ -5,8 +5,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Role } from '@/role/entities/role.entity';
+import { Button } from '@/button/entities/button.entity';
 @Entity({ name: 'menu' })
 export class Menu extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -57,4 +59,12 @@ export class Menu extends BaseEntity {
     },
   })
   roles: Role[];
+
+  /**
+  * @菜单和按钮权限
+  * @一对多
+  * @一个菜单拥有多个按钮权限
+  */
+  @OneToMany((type) => Button, (button) => button.menus)
+  buttons: Button[];
 }

@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from './entities/menu.entity';
 import { Role } from '@/type/menu';
+import { Button } from '@/type/button';
 
 @Injectable()
 export class MenuService {
@@ -22,7 +23,7 @@ export class MenuService {
    */
 
   async findAll() {
-    const res = await this.menuRepository.find({ relations: ['roles'] });
+    const res = await this.menuRepository.find({ relations: ['roles','buttons'] });
     const _list = res.reduce((curr, item) => {
       //  如果有key相同放到一个children数组里面
       if (
@@ -45,6 +46,7 @@ export class MenuService {
               title: item.title,
               showParent: item.showParent === 1 ? true : false,
               roles: this.getRolesList(item.roles),
+              auths: this.getButtonList(item.buttons),
             },
             // ! 这里children为空会导致菜单不显示
             // children: [],
@@ -100,8 +102,16 @@ export class MenuService {
 
   getRolesList(roles: Role) {
     const res =
-      roles.map((item) => {
+      roles?.map((item) => {
         return item.roleType;
+      }) || [];
+    return res;
+  }
+
+  getButtonList(button: Button) {
+    const res =
+    button?.map((item) => {
+        return item.btnPer;
       }) || [];
     return res;
   }

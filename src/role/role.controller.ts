@@ -11,11 +11,13 @@ import {
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 export type MenuObj = {
   menuArr: Array<number>;
   roleId: number;
 };
+@ApiTags('角色增删改查')
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
