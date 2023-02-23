@@ -8,7 +8,7 @@ export class AuthService {
   constructor(
     private readonly UserService: UserService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   /**
    * @本地身份策略调用方法
@@ -19,8 +19,6 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     console.log(username, 'username');
     const user = await this.UserService.findUserName(username);
-    console.log(user, 'user');
-
     if (Object.keys(user).length > 0 && user.password === password) {
       return user;
     }
