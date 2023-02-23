@@ -58,10 +58,108 @@
   # 执行命令选择`REST API`
 $ nest g resource menu
 ```
+
 ## 本地`websocket`
 
 `ws://localhost:3002`
 
 ## `websocket`版本
+
 `@nestjs/platform-socket.io": "^8.0.2`
 `@nestjs/websockets": "^8.0.2`
+
+## 文件目录
+
+```
+🗂expert-adventure-nestJs
+├─ 📄.env.production
+├─ 📄.DS_Store
+├─ 📄webpack-hmr.config.js
+├─ 📄nest-cli.json
+├─ 📄read.md
+├─ 📄README.md
+├─ 📄yarn.lock
+├─ 📄.gitignore
+├─ 📄package-lock.json
+├─ 📄package.json
+├─ 📄tsconfig.build.json
+├─ 📄.prettierrc
+├─ 📄.eslintrc.js
+├─ 📄tsconfig.json
+├─ 📄.env.development
+├─ 🗂test
+│  ├─ 📄app.e2e-spec.ts
+│  └─ 📄jest-e2e.json
+├─ 🗂dist
+├─ 🗂.vscode
+│  └─ 📄launch.json
+├─ 🗂expert-adventure
+│  ├─ 📄favicon.ico
+│  ├─ 📄serverConfig.json
+│  ├─ 📄index.html
+│  └─ 🗂static
+│     ├─ 🗂css
+│     ├─ 🗂js
+│     ├─ 🗂png
+│     └─ 🗂ttf
+├─ 🗂src
+│  ├─ 📄.DS_Store
+│  ├─ 📄main.ts
+│  ├─ 📄app.service.ts
+│  ├─ 📄doc.ts
+│  ├─ 📄app.module.ts
+│  ├─ 📄app.controller.spec.ts
+│  ├─ 📄app.controller.ts
+│  ├─ 🗂auth
+│  │  ├─ 📄auth.controller.ts
+│  │  ├─ 📄jwt.strategy.ts
+│  │  ├─ 📄auth.service.ts
+│  │  ├─ 📄jwt-auth.guard.ts
+│  │  ├─ 📄local-auth.guard.ts
+│  │  ├─ 📄constants.ts
+│  │  ├─ 📄local.strategy.ts
+│  │  └─ 📄auth.module.ts
+│  ├─ 🗂type
+│  │  ├─ 📄button.ts
+│  │  ├─ 📄menu.ts
+│  │  ├─ 📄user.ts
+│  │  └─ 📄auth.ts
+│  ├─ 🗂role
+│  │  ├─ 📄role.controller.ts
+│  │  ├─ 📄role.module.ts
+│  │  ├─ 📄role.service.ts
+│  │  ├─ 🗂dto
+│  │  └─ 🗂entities
+│  ├─ 🗂user
+│  │  ├─ 📄user.module.ts
+│  │  ├─ 📄.DS_Store
+│  │  ├─ 📄user.controller.ts
+│  │  ├─ 📄user.service.ts
+│  │  ├─ 🗂dto
+│  │  └─ 🗂entities
+│  ├─ 🗂common
+│  │  ├─ 🗂interceptors
+│  │  └─ 🗂exception
+│  ├─ 🗂button
+│  │  ├─ 📄button.controller.ts
+│  │  ├─ 📄button.service.ts
+│  │  ├─ 📄button.module.ts
+│  │  ├─ 🗂dto
+│  │  └─ 🗂entities
+│  ├─ 🗂menu
+│  │  ├─ 📄menu.controller.ts
+│  │  ├─ 📄menu.module.ts
+│  │  ├─ 📄menu.service.ts
+│  │  ├─ 🗂dto
+│  │  └─ 🗂entities
+│  └─ 🗂ws
+│     ├─ 📄ws.module.ts
+│     ├─ 📄ws.service.ts
+│     ├─ 📄ws.gateway.ts
+│     ├─ 📄ws.controller.ts
+│     ├─ 📄ws.adapter.ts
+│     ├─ 🗂dto
+│     └─ 🗂entities
+├─ 🗂.git
+└─ 🗂node_modules
+```

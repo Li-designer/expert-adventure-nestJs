@@ -54,6 +54,8 @@ export class UserService {
     const value = { ...res[0] };
     const resRole = await this.getRolesName(res[0]?.roles, role);
     delete value.roles;
+    console.log(value);
+    
     return {
       ...value,
       roles: resRole.Role,

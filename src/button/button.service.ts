@@ -15,24 +15,24 @@ export class ButtonService {
     private readonly MenuService: MenuService,
   ) { }
   async create(createButtonDto: CreateButtonDto) {
-    return await this.buttonRepository.save(createButtonDto)
+    return await this.buttonRepository.save(createButtonDto);
   }
 
   // 获取所有按钮权限
   async findAll() {
-    const res = await this.buttonRepository.find();
+    const res = await this.buttonRepository.find({ relations: ['menus'] });
     return res;
   }
 
   /**
- * @关联查询按钮权限查询关联菜单
- * @param btnId
- * @returns 关联菜单
- */
+   * @关联查询按钮权限查询关联菜单
+   * @param btnId
+   * @returns 关联菜单
+   */
   async getMenuOne(btnId: number) {
     const btnMenus = await this.buttonRepository
-      .createQueryBuilder("button")
-      .leftJoinAndSelect("button.menus", "menu")
+      .createQueryBuilder('button')
+      .leftJoinAndSelect('button.menus', 'menu')
       .where('Button.btnId = :btnId', { btnId })
       .getOne();
     return btnMenus;
@@ -48,11 +48,10 @@ export class ButtonService {
   async updateMenuKeys(btnId: number, menuId: number) {
     await this.buttonRepository
       .createQueryBuilder('button')
-      .relation(Menu, "buttons")
+      .relation(Menu, 'buttons')
       .of(menuId)
-      .add(btnId)
+      .add(btnId);
   }
-
 
   findOne(id: number) {
     return `This action returns a #${id} button`;
@@ -63,6 +62,6 @@ export class ButtonService {
   }
 
   async remove(btnId: number) {
-    return await this.buttonRepository.delete(btnId)
+    return await this.buttonRepository.delete(btnId);
   }
 }

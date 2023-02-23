@@ -9,6 +9,7 @@ import { RoleModule } from './role/role.module';
 import { ConfigModule } from '@nestjs/config';
 import { WsStartGateway } from './ws/ws.gateway';
 import { ButtonModule } from './button/button.module';
+import { WsModule } from './ws/ws.module'
 @Module({
   imports: [
     //  环境变量设置
@@ -32,8 +33,9 @@ import { ButtonModule } from './button/button.module';
     MenuModule,
     RoleModule,
     ButtonModule,
+    WsModule
   ],
   controllers: [AppController],
   providers: [AppService, WsStartGateway],
 })
-export class AppModule {}
+export class AppModule { }

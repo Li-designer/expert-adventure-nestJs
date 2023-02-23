@@ -1,5 +1,14 @@
 import { UpdateUserDto } from '@/user/dto/update-user.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ButtonService } from './button.service';
 import { CreateButtonDto } from './dto/create-button.dto';
@@ -21,10 +30,10 @@ export class ButtonController {
   }
 
   /**
-  * @关联查询按钮查询关联菜单
-  * @param btnId
-  * @returns
-  */
+   * @关联查询按钮查询关联菜单
+   * @param btnId
+   * @returns
+   */
   @Get('getButtonMenuOne')
   findOne(@Query('btnId') btnId: number) {
     return this.buttonService.getMenuOne(+btnId);
@@ -32,8 +41,8 @@ export class ButtonController {
 
   /**
    * 更新按钮权限列表
-   * @param updateButtonDto 
-   * @returns 
+   * @param updateButtonDto
+   * @returns
    */
 
   @Post('updateButtonList')
@@ -42,11 +51,11 @@ export class ButtonController {
   }
 
   /**
-  * @按钮关联菜单更新
-  * @param btnId
-  * @param keys
-  * @returns
-  */
+   * @按钮关联菜单更新
+   * @param btnId
+   * @param keys
+   * @returns
+   */
   @Post('updateMenuKeys')
   update(@Body('btnId') btnId: number, @Body('menuId') menuId: number) {
     return this.buttonService.updateMenuKeys(+btnId, +menuId);
