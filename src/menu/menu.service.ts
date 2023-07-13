@@ -23,7 +23,9 @@ export class MenuService {
    */
 
   async findAll() {
-    const res = await this.menuRepository.find({ relations: ['roles','buttons'] });
+    const res = await this.menuRepository.find({
+      relations: ['roles', 'buttons'],
+    });
     const _list = res.reduce((curr, item) => {
       //  如果有key相同放到一个children数组里面
       if (
@@ -44,7 +46,7 @@ export class MenuService {
               icon: item.icon,
               rank: item.rank,
               title: item.title,
-              showParent: item.showParent === 1 ? true : false,
+              showParent: item.showParent === 1,
               roles: this.getRolesList(item.roles),
               auths: this.getButtonList(item.buttons),
             },
@@ -110,7 +112,7 @@ export class MenuService {
 
   getButtonList(button: Button) {
     const res =
-    button?.map((item) => {
+      button?.map((item) => {
         return item.btnPer;
       }) || [];
     return res;
